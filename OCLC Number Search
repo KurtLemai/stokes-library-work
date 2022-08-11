@@ -8,17 +8,17 @@ mmsID = open("mmsid.txt").readlines()
 num = 0
 
 for item in mmsID:
+
     #Requests each item from Princeton Catalog
     id = re.sub('\D','',item)
     print(id)
     dict = {}
     dict[id] = requests.get('https://catalog.princeton.edu/catalog/' + id).text
     
-#Searches for OCLC Number
+    #Searches for OCLC Number
     soup = BeautifulSoup(dict[id], 'lxml')
     if soup.find('dd', class_ = 'blacklight-oclc_s') != None:
         oclc = soup.find('dd', class_ = 'blacklight-oclc_s').text
         print(oclc)
     else:
         print("No Oclc")
-    
